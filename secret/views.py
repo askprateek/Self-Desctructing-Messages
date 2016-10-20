@@ -9,5 +9,11 @@ def index(request):
     text = str(a.slug) +"<br> "+ str(a.message) +" <br>"+ str( a.status)
     return HttpResponse(text)
 
-def match(request):
-    return 0
+def match(request,slug):
+    obj =Secret.objects.get(slug=slug)
+    if obj.status==0:
+        obj.status=1
+        obj.save()
+        return HttpResponse(obj.message)
+    else:
+        return HttpResponse('Msg has been destructed')
